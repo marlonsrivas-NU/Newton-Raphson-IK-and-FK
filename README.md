@@ -15,28 +15,6 @@ This project implements and validates **Forward Kinematics (FK)** and **Inverse 
 
 ---
 
-## Theory
-
-### Forward Kinematics — Product of Exponentials
-
-The end-effector pose is computed using the space-frame PoE formula:
-
-$$T = e^{[S_1]\theta_1} \cdots e^{[S_n]\theta_n} M$$
-
-where $M \in SE(3)$ is the home configuration pose and $S_i = (\omega_i, v_i)$ is the screw axis for each joint expressed in the world frame.
-
-### Inverse Kinematics — Damped Least Squares
-
-The IK update follows a Newton-Raphson scheme using the **Damped Least Squares (DLS)** method for improved numerical stability near singularities:
-
-$$\Delta q = J_b^T\left(J_b J_b^T + \lambda^2 I\right)^{-1} \mathcal{V}_{err}$$
-
-where $\lambda = 0.05$ is the damping factor and $\mathcal{V}_{err}$ is the body-frame twist error computed from the matrix logarithm:
-
-$$\mathcal{V}_{err} = \left(\log\left(T_{current}^{-1} T_{target}\right)\right)^\vee$$
-
----
-
 ## Requirements
 
 - Python 3.10+
@@ -99,31 +77,6 @@ jupyter notebook
 
 1. **`Forward_Kinematics_Analytically.ipynb`** — Run first to validate FK
 2. **`Newton_Raphson_IK.ipynb`** — Run after FK to execute IK trajectory tracking
-
----
-
-## Results
-
-### FK Validation — 100 Random Configurations
-
-| Metric | Position Error (m) | Rotation Error (rad) |
-|---|---|---|
-| Minimum | 6.24e-17 | 4.71e-08 |
-| Mean | 6.01e-16 | 7.18e-08 |
-| Maximum | 1.26e-15 | 8.94e-08 |
-
-Errors are at machine precision, confirming the PoE implementation matches MuJoCo exactly.
-
-### IK Trajectory Tracking — 5 Iterations per Waypoint
-
-| Metric | Translational (m) | Rotational (rad) |
-|---|---|---|
-| RMSE | | |
-| Mean | | |
-| Std Dev | | |
-| Maximum | | |
-
-> Fill in your values from the trajectory error summary printout.
 
 ---
 
